@@ -10,9 +10,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.dcendents:android-maven-plugin:1.2'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+//        classpath 'com.github.dcendents:android-maven-plugin:1.2'
         classpath 'com.google.gms:google-services:+'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,4 +29,31 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+
+ext {
+    compileSdkVersion = 29
+
+    bintrayRepo = 'maven'
+    bintrayName = 'br.com.gorio.bqcodereader'
+
+    publishedGroupId = 'br.com.gorio.bqcodereader'
+    libraryName = 'BQCodeReader'
+    artifact = 'bqcodereader'
+
+    libraryDescription = 'Bar and QR Code Reader'
+
+    siteUrl = ' https://github.com/gorio/bqcodereader'
+    gitUrl = ' https://github.com/gorio/bqcodereader.git'
+
+    libraryVersion = '0.0.1'
+
+    developerId = 'gorio'
+    developerName = 'Eduardo Gorio'
+    developerEmail = 'eduardo@gorio.com.br'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }

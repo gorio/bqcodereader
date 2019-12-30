@@ -1,6 +1,6 @@
 package br.com.gorio.bqcodereader
 
-import br.com.gorio.mlbarcodescanner.Segmento.getSegmento
+import br.com.gorio.bqcodereader.Segmento.getSegmento
 import java.text.SimpleDateFormat
 import java.util.*
 
