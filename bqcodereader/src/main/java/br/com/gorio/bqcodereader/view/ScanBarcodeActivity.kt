@@ -4,9 +4,12 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,14 +29,17 @@ class ScanBarcodeActivity : AppCompatActivity() {
 
     private var TYPE: Int = 0
     private val MY_PERMISSIONS_REQUEST_CAMERA: Int = 100
+    private var INFO_TEXT = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (intent.getStringExtra("type").equals("barcode")) {
             TYPE = 1
+            INFO_TEXT = "Leia o código de barras"
         } else if (intent.getStringExtra("type").equals("qrcode")) {
             TYPE = 2
+            INFO_TEXT = "Leia o QRCode"
         } else {
             val intent = Intent()
             setResult(Activity.RESULT_CANCELED, intent)
@@ -110,12 +116,38 @@ class ScanBarcodeActivity : AppCompatActivity() {
     private fun cameraSource() {
         setContentView(R.layout.activity_scan_barcode)
 
+        infoText.text = INFO_TEXT
+        infoText.setTextColor(Color.WHITE)
+        infoText.textSize = 20f
+
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getRealMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
+        val x: Int
+        val y: Int
+
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // In landscape
+            if (width > height) {
+                x = width
+                y = height
+            } else {
+                x = height
+                y = width
+            }
+        } else {
+            // In portrait
+            x = height
+            y = width
+        }
         val barcodeDetector = BarcodeDetector.Builder(this)
 //            .setBarcodeFormats(Barcode.CODABAR or Barcode.QR_CODE or Barcode.ALL_FORMATS)
             .build()
         val cameraSource =
             CameraSource.Builder(this, barcodeDetector).setAutoFocusEnabled(true)
-                .setRequestedPreviewSize(1920, 1080)
+                .setRequestedPreviewSize(x, y)
                 .build()
 
         caera_preview.holder.addCallback(object : SurfaceHolder.Callback {

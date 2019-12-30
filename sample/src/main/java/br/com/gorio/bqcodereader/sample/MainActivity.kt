@@ -3,6 +3,7 @@ package br.com.gorio.bqcodereader.sample
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import br.com.gorio.bqcodereader.view.ScanBarcodeActivity
@@ -47,5 +48,19 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ScanBarcodeActivity::class.java)
         intent.putExtra("type", "qrcode")
         startActivityForResult(intent, CODE_RETURN)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val returnCode = returnCode.text
+        outState.putCharSequence("savedText", returnCode)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        val savedText = savedInstanceState?.getCharSequence("savedText")
+        returnCode.text = savedText
     }
 }
