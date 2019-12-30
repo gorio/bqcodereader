@@ -1,2 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.gorio.bqcodereader" />
+    package="br.com.gorio.bqcodereader">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application>
+        <activity android:name=".view.ScanBarcodeActivity" />
+    </application>
+</manifest>

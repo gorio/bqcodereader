@@ -1,2 +1,2 @@
-include ':app', ':bqcodereader'
+include ':bqcodereader', ':sample'
 rootProject.name='BQ Code Reader'
